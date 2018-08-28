@@ -45,10 +45,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -182,12 +189,58 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CRMCusBillingController.cs" />
+    <Compile Include="Controllers\CRMCusContactController.cs" />
+    <Compile Include="Controllers\CRMCustomerController.cs" />
+    <Compile Include="Controllers\CRMOriginDestinationController.cs" />
+    <Compile Include="Controllers\CRMPsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SPCalendarController.cs" />
+    <Compile Include="Controllers\SPUserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="CRMBase.cs" />
+    <Compile Include="DataAccess\CRMCusBillingDA.cs" />
+    <Compile Include="DataAccess\CRMCusContactDA.cs" />
+    <Compile Include="DataAccess\CRMCustomerDA.cs" />
+    <Compile Include="DataAccess\CRMOriginDestinationDA.cs" />
+    <Compile Include="DataAccess\CRMPsDA.cs" />
+    <Compile Include="DataAccess\SPCalendarDA.cs" />
+    <Compile Include="DataAccess\SPUserDA.cs" />
+    <Compile Include="Data\CRMData.cs" />
+    <Compile Include="Data\SPData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="KeysJsonConverter.cs" />
+    <Compile Include="Models\CRMModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CRMModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CRMModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CRMModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblCusBilling.cs">
+      <DependentUpon>CRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblCusContact.cs">
+      <DependentUpon>CRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblCustomer.cs">
+      <DependentUpon>CRMModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblOriginDestination.cs">
+      <DependentUpon>CRMModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SPBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -198,6 +251,16 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\CRMModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CRMModel.Context.cs</LastGenOutput>
+      <DependentUpon>CRMModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CRMModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CRMModel.edmx</DependentUpon>
+      <LastGenOutput>CRMModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -222,6 +285,13 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EntityDeploy Include="Models\CRMModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CRMModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CRMModel.edmx.diagram">
+      <DependentUpon>CRMModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -245,7 +315,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -275,6 +344,9 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
