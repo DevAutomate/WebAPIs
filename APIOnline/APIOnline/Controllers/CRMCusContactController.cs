@@ -5,9 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Data;
-using APIOnline.Data;
-using APIOnline.DataAccess;
 using Newtonsoft.Json;
+using APIOnline.Models;
 
 namespace APIOnline.Controllers
 {
@@ -18,21 +17,25 @@ namespace APIOnline.Controllers
         [Route("getid")]
         public string GetCusContactAll(string CusId)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            DataSet ds = new DataSet();
-            ds = SPD.GetCusContactAll(CusId);
-            string json = JsonConvert.SerializeObject(ds);
+            string json;
+            using (var ctx = new CRMModel())
+            {
+                var CusConList = ctx.tblCusContacts.Where(ci => ci.CusId == CusId).ToList();
+                json = JsonConvert.SerializeObject(CusConList);
+            }
             return json;
         }
 
         // GET api/CRMCusContact?CusId&CusContact
         [Route("getidno")]
-        public string GetCusContact(string CusId, string CusContact)
+        public string GetCusContact(string CusId, string ContactId)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            DataSet ds = new DataSet();
-            ds = SPD.GetCusContact(CusId,CusContact);
-            string json = JsonConvert.SerializeObject(ds);
+            string json;
+            using (var ctx = new CRMModel())
+            {
+                var CusConList = ctx.tblCusContacts.Where(ci => ci.CusId == CusId && ci.ContactId == ContactId).ToList();
+                json = JsonConvert.SerializeObject(CusConList);
+            }
             return json;
         }
 
@@ -40,10 +43,12 @@ namespace APIOnline.Controllers
         [Route("getidname")]
         public string GetCusContactName(string CusId, string ContactName)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            DataSet ds = new DataSet();
-            ds = SPD.GetCusContactName(CusId, ContactName);
-            string json = JsonConvert.SerializeObject(ds);
+            string json;
+            using (var ctx = new CRMModel())
+            {
+                var CusConList = ctx.tblCusContacts.Where(ci => ci.CusId == CusId && ci.ContactName == ContactName).ToList();
+                json = JsonConvert.SerializeObject(CusConList);
+            }
             return json;
         }
 
@@ -51,23 +56,67 @@ namespace APIOnline.Controllers
         // POST api/CRMCusContact?tblCuscontact
         public void Post([FromBody]tblCusContact cc)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            SPD.PostCusContact(cc);
+            using (var ctx = new CRMModel())
+            {
+                var cuscon = ctx.Set<tblCusContact>();
+                cuscon.Add(new tblCusContact
+                {
+                    CusId = cc.CusId,
+                    ContactId = cc.ContactId,
+                    ContactName = cc.ContactName,
+                    ContactPhoneH = cc.ContactPhoneH,
+                    ContactPhoneO = cc.ContactPhoneO,
+                    ContactPhoneM = cc.ContactPhoneM,
+                    ContactFax = cc.ContactFax,
+                    ContactEmail = cc.ContactEmail,
+                    EmId = cc.EmId,
+                    AddPerson = cc.AddPerson,
+                    Department = cc.Department
+                });
+
+                ctx.SaveChanges();
+            }
         }
 
         // PUT api/CRMCusContact?CusId,ContactId,tblCuscontact
         public void Put(string CusId, string ContactId, [FromBody]tblCusContact cc)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            SPD.PutCusContact(CusId, ContactId, cc);
+            using (var ctx = new CRMModel())
+            {
+
+                // Update Statement
+                var update = ctx.tblCusContacts.Where(ci => ci.CusId == CusId).FirstOrDefault();
+                if (update != null)
+                {
+                    update.CusId = cc.CusId;
+                    update.ContactId = cc.ContactId;
+                    update.ContactName = cc.ContactName;
+                    update.ContactPhoneH = cc.ContactPhoneH;
+                    update.ContactPhoneO = cc.ContactPhoneO;
+                    update.ContactPhoneM = cc.ContactPhoneM;
+                    update.ContactFax = cc.ContactFax;
+                    update.ContactEmail = cc.ContactEmail;
+                    update.EmId = cc.EmId;
+                    update.AddPerson = cc.AddPerson;
+                    update.Department = cc.Department;
+                }
+
+                ctx.SaveChanges();
+            }
         }
 
 
         // DELETE api/CRMCusContact?CusId&ContactId
         public void Delete(string CusId, string ContactId)
         {
-            CRMCusContactDA SPD = new CRMCusContactDA();
-            SPD.DeleteCusContact(CusId,ContactId);
+            using (var ctx = new CRMModel())
+            {
+                var del = ctx.tblCusContacts.Where(ci => ci.CusId == CusId && ci.ContactId == ContactId).FirstOrDefault();
+                if (del != null)
+                {
+                    ctx.tblCusContacts.Remove(del);
+                }
+            }
         }
     }
 }
