@@ -12,9 +12,9 @@ namespace APIOnline.Models
         {
         }
 
-        public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblCusBilling> tblCusBillings { get; set; }
         public virtual DbSet<tblCusContact> tblCusContacts { get; set; }
+        public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblOriginDestination> tblOriginDestinations { get; set; }
         public virtual DbSet<tblP> tblPS { get; set; }
 

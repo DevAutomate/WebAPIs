@@ -201,7 +201,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="KeysJsonConverter.cs" />
     <Compile Include="Models\CRMModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Job.cs" />

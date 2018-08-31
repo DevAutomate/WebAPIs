@@ -14,10 +14,13 @@ namespace APIOnline.Models
         [StringLength(50)]
         public string CusId { get; set; }
 
-        public int? CustomerId { get; set; }
-
         [Key]
         [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int CustomerId { get; set; }
+
+        [Key]
+        [Column(Order = 2)]
         [StringLength(50)]
         public string CusCode { get; set; }
 

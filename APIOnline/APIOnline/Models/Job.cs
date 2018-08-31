@@ -9,8 +9,6 @@ namespace APIOnline.Models
     [Table("Job")]
     public partial class Job
     {
-        [Key]
-        [Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int JobID { get; set; }
 
@@ -27,8 +25,7 @@ namespace APIOnline.Models
 
         public double? JobCuft { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(500)]
         public string TruckTrip { get; set; }
 

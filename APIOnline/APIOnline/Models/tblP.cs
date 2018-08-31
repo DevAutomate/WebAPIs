@@ -19,9 +19,6 @@ namespace APIOnline.Models
         [StringLength(25)]
         public string PSRefNo { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int PSubID { get; set; }
 
         [StringLength(50)]

@@ -27,10 +27,5 @@ namespace APIOnline.Models
                 .IsFixedLength()
                 .IsUnicode(false);
         }
-
-        internal object Add(Job job)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
